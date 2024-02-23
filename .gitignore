@@ -13,8 +13,6 @@ environments/
 
 # Node
 /node_modules
-npm-debug.log
-yarn-error.log
 
 # IDEs and editors
 .idea/
@@ -34,13 +32,15 @@ yarn-error.log
 !.vscode/extensions.json
 .history/*
 
+# Ignore Logs
+logs
+*.log
+
 # Miscellaneous
 .angular/
 .sass-cache/
 /connect.lock
 /coverage
-/libpeerconnection.log
-testem.log
 /typings
 
 # System files
