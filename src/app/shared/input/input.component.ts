@@ -1,11 +1,7 @@
 import { NgxMaskDirective } from 'ngx-mask';
 
 import { Component, Input } from '@angular/core';
-import {
-  FormControl,
-  ReactiveFormsModule,
-  ValidationErrors,
-} from '@angular/forms';
+import { FormControl, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'app-input',
@@ -31,6 +27,8 @@ export class InputComponent {
     pattern2:
       '- must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number',
     pattern3: '- can contain special characters',
+    match: 'Password do not match.',
+    easy: 'Password is too easy.',
   };
   // control = input<FormControl>(new FormControl());
 }

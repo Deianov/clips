@@ -51,5 +51,16 @@ dropSpecialCharacters
   <p>{{ msg.pattern2 }}</p>
   <p>{{ msg.pattern3 }}</p>
   }
+  <!-- password match -->
+  @if (control.errors?.noMatch) {
+  <p>{{ msg.match }}</p>
+  }
+  <!-- password match -->
+  @if (control.errors?.easy) {
+  <p>{{ msg.easy }}</p>
+  <!-- email taken -->
+  } @if (control.errors?.emailTaken) {
+  <p>Email taken. Pleas try another email.</p>
+  }
 </ng-container>
 }
