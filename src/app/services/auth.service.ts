@@ -1,13 +1,24 @@
 import { FirebaseError } from 'firebase/app';
 import { AuthErrorCodes } from 'firebase/auth';
-import { delay, map, Observable } from 'rxjs';
+import { delay, filter, from, map, Observable, of, switchMap } from 'rxjs';
 
-import { inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable, Signal } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import {
-  AngularFirestore,
-  AngularFirestoreCollection,
-} from '@angular/fire/compat/firestore';
+	ActivatedRoute,
+	ActivatedRouteSnapshot,
+	ChildActivationEnd,
+	ChildActivationStart,
+	NavigationCancel,
+	NavigationEnd,
+	NavigationError,
+	NavigationStart,
+	RouteConfigLoadEnd,
+	RouteConfigLoadStart,
+	Router,
+	RoutesRecognized,
+} from '@angular/router';
 
 import IUser from '../models/user.model';
 
@@ -18,12 +29,23 @@ export class AuthService {
   private auth = inject(AngularFireAuth);
   private firestore = inject(AngularFirestore);
   private users: AngularFirestoreCollection<IUser>;
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
   public isAuthenticated$: Observable<boolean>;
   public isAuthenticatedWithDelay$: Observable<boolean>;
+  private redirect = false;
+
+  public isAuthenticatedSignal: Signal<Observable<boolean>> = computed(
+    () => this.isAuthenticated$
+  );
+
+  public displayName$: Signal<Observable<string>> = computed(() =>
+    this.auth.user.pipe(map((user) => user?.displayName || ''))
+  );
 
   // time for the user to see a login's message
-  private AUTHENTICATION_DELAY = 1000;
+  private readonly AUTHENTICATION_DELAY = 1000;
 
   constructor() {
     this.users = this.firestore.collection('users');
@@ -31,6 +53,16 @@ export class AuthService {
     this.isAuthenticatedWithDelay$ = this.isAuthenticated$.pipe(
       delay(this.AUTHENTICATION_DELAY)
     );
+
+    this.router.events
+      .pipe(
+        filter((e) => e instanceof NavigationEnd),
+        map((e) => this.route.snapshot.firstChild),
+        switchMap((route) => of(getRouteAuth(route)))
+      )
+      .subscribe((data) => {
+        this.redirect = data.authOnly ?? false;
+      });
   }
 
   public async createUser(model: IUser) {
@@ -71,8 +103,13 @@ export class AuthService {
     }
   }
 
-  public async logout() {
-    this.auth.signOut();
+  public async logout($event?: Event) {
+    $event?.preventDefault();
+    await this.auth.signOut();
+
+    if (this.redirect) {
+      await this.router.navigateByUrl('/');
+    }
   }
 }
 
@@ -80,6 +117,18 @@ type UserCredentials = {
   email: string;
   password: string;
 };
+
+function getRouteAuth(route: ActivatedRouteSnapshot | null): {
+  authOnly: boolean;
+} {
+  const data = Object.prototype.hasOwnProperty.call(route?.data, 'authOnly')
+    ? route?.data
+    : route?.firstChild?.data;
+
+  return {
+    authOnly: Boolean(typeof data === 'object' ? data['authOnly'] : false),
+  };
+}
 
 /*
     https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#createuserwithemailandpassword
