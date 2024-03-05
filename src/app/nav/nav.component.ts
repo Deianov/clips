@@ -1,5 +1,6 @@
-import { CommonModule } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { AuthService } from '../services/auth.service';
 import { ModalService } from '../services/modal.service';
@@ -7,28 +8,22 @@ import { ModalService } from '../services/modal.service';
 @Component({
   selector: 'app-nav',
   standalone: true,
-  imports: [CommonModule],
+  imports: [AsyncPipe, RouterLink, RouterLinkActive],
   templateUrl: './nav.component.html',
-  styleUrl: './nav.component.css',
 })
 export class NavComponent {
   private modalService = inject(ModalService);
-  public authService = inject(AuthService);
-  public isAuthenticated = false;
+  private authService = inject(AuthService);
 
-  constructor() {
-    this.authService.isAuthenticated$.subscribe((status) => {
-      this.isAuthenticated = status;
-    });
-  }
+  displayName = this.authService.displayName$;
+  isAuthenticated = this.authService.isAuthenticatedSignal;
 
   openModal($event: Event) {
     $event.preventDefault();
     this.modalService.toggleModal('auth');
   }
 
-  logout($event: Event) {
-    $event.preventDefault();
-    this.authService.logout();
-  }
+  logout = (event: Event) => {
+    this.authService.logout(event);
+  };
 }
