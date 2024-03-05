@@ -1,21 +1,13 @@
-import { CommonModule } from '@angular/common';
-import {
-  Component,
-  ElementRef,
-  inject,
-  Input,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { NgClass } from '@angular/common';
+import { Component, ElementRef, inject, Input, OnDestroy, OnInit } from '@angular/core';
 
 import { ModalService } from '../../services/modal.service';
 
 @Component({
   selector: 'app-modal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [NgClass],
   templateUrl: './modal.component.html',
-  styleUrl: './modal.component.css',
 })
 export class ModalComponent implements OnInit, OnDestroy {
   private modalService = inject(ModalService);

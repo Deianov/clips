@@ -11,7 +11,6 @@ import { AuthModalComponent } from './user/auth-modal/auth-modal.component';
   standalone: true,
   imports: [AsyncPipe, RouterOutlet, NavComponent, AuthModalComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
 })
 export class AppComponent {
   private authService = inject(AuthService);

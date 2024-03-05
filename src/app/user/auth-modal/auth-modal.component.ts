@@ -18,7 +18,6 @@ import { RegisterComponent } from '../register/register.component';
     ModalComponent,
   ],
   templateUrl: './auth-modal.component.html',
-  styleUrl: './auth-modal.component.css',
 })
 export class AuthModalComponent implements OnInit, OnDestroy {
   modalService = inject(ModalService);

@@ -1,12 +1,6 @@
 import { JsonPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import IUser from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
@@ -20,7 +14,6 @@ import { RegisterValidators } from '../validators/register-validators';
   standalone: true,
   imports: [ReactiveFormsModule, JsonPipe, InputComponent, AlertComponent],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css',
 })
 export class RegisterComponent {
   private authService = inject(AuthService);

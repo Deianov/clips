@@ -5,8 +5,5 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './upload.component.html',
-  styleUrl: './upload.component.css'
 })
-export class UploadComponent {
-
-}
+export class UploadComponent {}
