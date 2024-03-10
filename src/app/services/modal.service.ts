@@ -23,10 +23,12 @@ export class ModalService {
     return !!this.modals.find((modal) => modal.id === id)?.visible;
   }
 
-  toggleModal(id: string) {
+  toggleModal(id: string, timeout?: number) {
     const modal = this.modals.find((modal) => modal.id === id);
     if (modal) {
-      modal.visible = !modal.visible;
+      setTimeout(() => {
+        modal.visible = !modal.visible;
+      }, timeout ?? 0);
     }
   }
 }

@@ -1,6 +1,5 @@
 //  https://github.com/angular/angularfire/issues/3365
-//  My firebase environment is saved in the Angular environment file
-//  @environment is just a typescript path alias
+
 import { EnvironmentProviders, importProvidersFrom } from '@angular/core';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
