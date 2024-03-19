@@ -1,13 +1,20 @@
 import { deleteObject, getStorage, ref } from 'firebase/storage';
-import { BehaviorSubject, combineLatest, map, of, OperatorFunction, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  map,
+  of,
+  OperatorFunction,
+  switchMap,
+} from 'rxjs';
 
 import { inject, Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
-	AngularFirestore,
-	AngularFirestoreCollection,
-	DocumentReference,
-	QuerySnapshot,
+  AngularFirestore,
+  AngularFirestoreCollection,
+  DocumentReference,
+  QuerySnapshot,
 } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 
@@ -62,8 +69,10 @@ export class ClipService {
 
     const storage = getStorage();
     const clipRef = ref(storage, `clips/${clip.fileName}`);
+    const screenshotRef = ref(storage, `screenshot/${clip.screenshotFileName}`);
 
     await deleteObject(clipRef);
+    await deleteObject(screenshotRef);
 
     await this.clipsCollection.doc(clip.docID).delete();
   }

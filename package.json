@@ -19,6 +19,9 @@
     "@angular/platform-browser": "^17.0.0",
     "@angular/platform-browser-dynamic": "^17.0.0",
     "@angular/router": "^17.0.0",
+    "@ffmpeg/core": "0.11",
+    "@ffmpeg/ffmpeg": "0.11",
+    "@types/node": "^20.11.28",
     "@types/uuid": "^9.0.8",
     "ngx-mask": "^17.0.4",
     "rxjs": "~7.8.0",
@@ -41,5 +44,9 @@
     "postcss": "^8.4.33",
     "tailwindcss": "^3.4.1",
     "typescript": "~5.2.2"
+  },
+  "overrides": {
+      "@ffmpeg/core": "0.11",
+      "@ffmpeg/ffmpeg": "0.11"
   }
 }

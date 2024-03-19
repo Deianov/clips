@@ -1,4 +1,7 @@
-import { AngularFireAuthGuard, redirectUnauthorizedTo } from '@angular/fire/compat/auth-guard';
+import {
+  AngularFireAuthGuard,
+  redirectUnauthorizedTo,
+} from '@angular/fire/compat/auth-guard';
 import { Routes } from '@angular/router';
 import { authGuard } from '@shared/guards/auth.guard';
 

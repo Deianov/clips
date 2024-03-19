@@ -3,6 +3,12 @@
   <div class="rounded relative flex flex-col">
     <div class="font-bold mb-6">Upload Video</div>
 
+    @if (!ffmpegService.isReady) {
+    <span class="material-icons text-center text-6xl p-8 animate-pulse">
+      settings
+    </span>
+    } @else {
+
     <!-- Upload Dropbox -->
     @if (!nestStep) {
     <div
@@ -19,6 +25,11 @@
       class="w-full px-10 py-40 rounded text-center cursor-pointer border border-dashed border-gray-400 transition duration-500 hover:text-white hover:bg-indigo-400 hover:border-indigo-400 hover:border-solid text-xl"
     >
       <h5>Drop your file here (mp4 only!)</h5>
+      @if (ffmpegService.isRunning === true) {
+      <span class="material-icons text-center text-6xl p-8 animate-spin">
+        autorenew
+      </span>
+      }
     </div>
     <input type="file" class="mt-4" (change)="storeFile($event)" />
     } @else {
@@ -37,17 +48,19 @@
       <!-- Screenshots -->
       <h2 class="mb-4 text-xl">Select a Thumbnail</h2>
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <div class="border-8 cursor-pointer border-green-400">
-          <img src="assets/img/1.jpg" />
+        @for (image of screenshots; track $index) {
+        <div
+          class="border-8 cursor-pointer"
+          [ngClass]="{
+            'border-green-400': image === selectedScreenshot,
+            'border-transparent': image !== selectedScreenshot
+          }"
+          (click)="selectedScreenshot = image"
+        >
+          <img [src]="image | safeURL" />
         </div>
-        <div class="border-8 cursor-pointer border-transparent">
-          <img src="assets/img/2.jpg" />
-        </div>
-        <div class="border-8 cursor-pointer border-transparent">
-          <img src="assets/img/3.jpg" />
-        </div>
+        }
       </div>
-
       <!-- Title -->
       <div class="mt-4">
         <label class="block text-xl mb-4">Title</label>
@@ -68,6 +81,6 @@
         </button>
       </div>
     </form>
-    }
+    } }
   </div>
 </section>
