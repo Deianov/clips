@@ -69,7 +69,10 @@ export class ClipService {
 
     const storage = getStorage();
     const clipRef = ref(storage, `clips/${clip.fileName}`);
-    const screenshotRef = ref(storage, `screenshot/${clip.screenshotFileName}`);
+    const screenshotRef = ref(
+      storage,
+      `screenshots/${clip.screenshotFileName}`
+    );
 
     await deleteObject(clipRef);
     await deleteObject(screenshotRef);
