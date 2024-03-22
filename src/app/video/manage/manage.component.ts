@@ -1,7 +1,13 @@
 import { BehaviorSubject } from 'rxjs';
 
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, Params, Router, RouterLink, RouterOutlet } from '@angular/router';
+import {
+  ActivatedRoute,
+  Params,
+  Router,
+  RouterLink,
+  RouterOutlet,
+} from '@angular/router';
 
 import IClip from '../../models/clip.model';
 import { ClipService } from '../../services/clip.service';
@@ -80,6 +86,20 @@ export class ManageComponent implements OnInit {
 
   setClip($event: IClip) {
     this.activeClip.set($event);
+  }
+
+  async copyToClipboard($event: MouseEvent, docID: string | undefined) {
+    $event.preventDefault();
+
+    if (!docID) {
+      return;
+    }
+
+    const url = `${location.origin}/clip/${docID}`;
+
+    await navigator.clipboard.writeText(url);
+
+    alert('Link Copied!');
   }
 
   // update($event: IClip){

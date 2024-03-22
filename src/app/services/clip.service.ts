@@ -2,9 +2,10 @@ import { deleteObject, getStorage, ref } from 'firebase/storage';
 import {
   BehaviorSubject,
   combineLatest,
+  lastValueFrom,
   map,
+  Observable,
   of,
-  OperatorFunction,
   switchMap,
 } from 'rxjs';
 
@@ -16,9 +17,9 @@ import {
   DocumentReference,
   QuerySnapshot,
 } from '@angular/fire/compat/firestore';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { Router } from '@angular/router';
 
-import { ClipComponent } from '../clip/clip.component';
+// import { AngularFireStorage } from '@angular/fire/compat/storage';
 import IClip from '../models/clip.model';
 
 @Injectable({
@@ -27,9 +28,12 @@ import IClip from '../models/clip.model';
 export class ClipService {
   private readonly db = inject(AngularFirestore);
   private readonly auth = inject(AngularFireAuth);
+  private readonly router = inject(Router);
   // private readonly storage = inject(AngularFireStorage);
 
   public clipsCollection: AngularFirestoreCollection<IClip>;
+  pageClips: IClip[] = [];
+  pendingReg = false;
 
   constructor() {
     this.clipsCollection = this.db.collection('clips');
@@ -78,5 +82,55 @@ export class ClipService {
     await deleteObject(screenshotRef);
 
     await this.clipsCollection.doc(clip.docID).delete();
+  }
+
+  async getClips() {
+    if (this.pendingReg) {
+      return;
+    }
+    this.pendingReg = true;
+
+    let query = this.clipsCollection.ref.orderBy('timestamp', 'desc').limit(6);
+
+    const { length } = this.pageClips;
+
+    if (length) {
+      const lastDocID = this.pageClips[length - 1].docID;
+      const lastDoc = await lastValueFrom(
+        this.clipsCollection.doc(lastDocID).get()
+      );
+
+      console.log(lastDoc);
+
+      query = query.startAfter(lastDoc);
+    }
+
+    const snapshot = await query.get();
+
+    snapshot.forEach((doc) => {
+      this.pageClips.push({
+        docID: doc.id,
+        ...doc.data(),
+      });
+    });
+
+    this.pendingReg = false;
+  }
+
+  resolve(id: string): Observable<IClip | null> {
+    return this.clipsCollection
+      .doc(id)
+      .get()
+      .pipe(
+        map((snapshot) => {
+          const data = snapshot.data();
+
+          if (!data) {
+            this.router.navigate(['/']);
+            return null;
+          }
+          return data;
+        })
+      );
   }
 }

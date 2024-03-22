@@ -1,15 +1,8 @@
-import {
-  AngularFireAuthGuard,
-  redirectUnauthorizedTo,
-} from '@angular/fire/compat/auth-guard';
 import { Routes } from '@angular/router';
-import { authGuard } from '@shared/guards/auth.guard';
 
-import { AboutComponent } from './about/about.component';
 import { ClipComponent } from './clip/clip.component';
 import { HomeComponent } from './home/home.component';
-
-const redirectUnauthorizedToHome = () => redirectUnauthorizedTo('/');
+import { ClipResolver } from './resolvers/clip-resolver';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -17,26 +10,17 @@ export const routes: Routes = [
   {
     path: 'about',
     title: 'About',
-    component: AboutComponent,
+    loadComponent: () =>
+      import('./about/about.component').then((m) => m.AboutComponent),
   },
   {
-    path: 'manage',
-    loadChildren: () =>
-      import('./video/video-routes').then((m) => m.MANAGE_ROUTES),
-    data: {
-      authGuardPipe: redirectUnauthorizedToHome,
-    },
-    canActivate: [AngularFireAuthGuard],
-  },
-  {
-    path: 'upload',
-    loadChildren: () =>
-      import('./video/video-routes').then((m) => m.UPLOAD_ROUTES),
-    canActivate: [authGuard],
+    path: 'dashboard',
+    loadChildren: () => import('./video/video-routes').then((m) => m.routes),
   },
   {
     path: 'clip/:id',
     component: ClipComponent,
+    resolve: { clip: ClipResolver },
   },
   {
     path: '**',

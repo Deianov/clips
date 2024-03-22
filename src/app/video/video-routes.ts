@@ -1,36 +1,36 @@
+import {
+  AngularFireAuthGuard,
+  redirectUnauthorizedTo,
+} from '@angular/fire/compat/auth-guard';
 import { Routes } from '@angular/router';
+import { authGuard } from '@shared/guards/auth.guard';
 
-import { ManageComponent } from './manage/manage.component';
-import { UploadComponent } from './upload/upload.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
-export const MANAGE_ROUTES: Routes = [
+const redirectUnauthorizedToHome = () => redirectUnauthorizedTo('/');
+
+export const routes: Routes = [
   {
     path: '',
-    component: ManageComponent,
-    data: {
-      authOnly: true,
-    },
+    component: DashboardComponent,
 
-    // children: [
-    //   {
-    //     path: '',
-    //     pathMatch: 'full',
-    //     redirectTo: 'upload',
-    //   },
-    //   {
-    //     path: 'upload',
-    //     component: UploadComponent,
-    //   },
-    // ],
-  },
-];
-
-export const UPLOAD_ROUTES: Routes = [
-  {
-    path: '',
-    component: UploadComponent,
-    data: {
-      authOnly: true,
-    },
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'manage' },
+      {
+        path: 'manage',
+        loadComponent: () =>
+          import('./manage/manage.component').then((m) => m.ManageComponent),
+        data: {
+          authGuardPipe: redirectUnauthorizedToHome,
+        },
+        canActivate: [AngularFireAuthGuard],
+      },
+      {
+        path: 'upload',
+        loadComponent: () =>
+          import('./upload/upload.component').then((m) => m.UploadComponent),
+        canActivate: [authGuard],
+      },
+    ],
   },
 ];
