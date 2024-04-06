@@ -1,5 +1,12 @@
 import { NgClass } from '@angular/common';
-import { Component, ElementRef, inject, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 
 import { ModalService } from '../../services/modal.service';
 
@@ -10,7 +17,7 @@ import { ModalService } from '../../services/modal.service';
   templateUrl: './modal.component.html',
 })
 export class ModalComponent implements OnInit, OnDestroy {
-  private modalService = inject(ModalService);
+  #modalService = inject(ModalService);
   private elementRef = inject(ElementRef);
 
   @Input() modalID = '';
@@ -21,11 +28,11 @@ export class ModalComponent implements OnInit, OnDestroy {
   }
 
   isModalOpen() {
-    return this.modalService.isModalOpen(this.modalID);
+    return this.#modalService.isModalOpen(this.modalID);
   }
 
   closeModal() {
-    this.modalService.toggleModal(this.modalID);
+    this.#modalService.toggleModal(this.modalID);
   }
 
   // remove the element from DOM

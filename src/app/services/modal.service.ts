@@ -9,22 +9,22 @@ interface IModal {
   providedIn: 'root',
 })
 export class ModalService {
-  private modals: IModal[] = [];
+  #modals: IModal[] = [];
 
   register(id: string) {
-    this.modals.push({ id, visible: false });
+    this.#modals.push({ id, visible: false });
   }
 
   unregister(id: string) {
-    this.modals = this.modals.filter((modal) => modal.id !== id);
+    this.#modals = this.#modals.filter((modal) => modal.id !== id);
   }
 
   isModalOpen(id: string): boolean {
-    return !!this.modals.find((modal) => modal.id === id)?.visible;
+    return !!this.#modals.find((modal) => modal.id === id)?.visible;
   }
 
   toggleModal(id: string, timeout?: number) {
-    const modal = this.modals.find((modal) => modal.id === id);
+    const modal = this.#modals.find((modal) => modal.id === id);
     if (modal) {
       setTimeout(() => {
         modal.visible = !modal.visible;

@@ -4,20 +4,23 @@ import { delay, filter, from, map, Observable, of, switchMap } from 'rxjs';
 
 import { computed, inject, Injectable, Signal } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import {
-	ActivatedRoute,
-	ActivatedRouteSnapshot,
-	ChildActivationEnd,
-	ChildActivationStart,
-	NavigationCancel,
-	NavigationEnd,
-	NavigationError,
-	NavigationStart,
-	RouteConfigLoadEnd,
-	RouteConfigLoadStart,
-	Router,
-	RoutesRecognized,
+  AngularFirestore,
+  AngularFirestoreCollection,
+} from '@angular/fire/compat/firestore';
+import {
+  ActivatedRoute,
+  ActivatedRouteSnapshot,
+  ChildActivationEnd,
+  ChildActivationStart,
+  NavigationCancel,
+  NavigationEnd,
+  NavigationError,
+  NavigationStart,
+  RouteConfigLoadEnd,
+  RouteConfigLoadStart,
+  Router,
+  RoutesRecognized,
 } from '@angular/router';
 
 import IUser from '../models/user.model';
@@ -26,51 +29,51 @@ import IUser from '../models/user.model';
   providedIn: 'root',
 })
 export class AuthService {
-  private auth = inject(AngularFireAuth);
-  private firestore = inject(AngularFirestore);
-  private users: AngularFirestoreCollection<IUser>;
-  private router = inject(Router);
-  private route = inject(ActivatedRoute);
+  #auth = inject(AngularFireAuth);
+  #firestore = inject(AngularFirestore);
+  #users: AngularFirestoreCollection<IUser>;
+  #router = inject(Router);
+  #route = inject(ActivatedRoute);
 
-  public isAuthenticated$: Observable<boolean>;
-  public isAuthenticatedWithDelay$: Observable<boolean>;
-  private redirect = false;
+  isAuthenticated$: Observable<boolean>;
+  isAuthenticatedWithDelay$: Observable<boolean>;
+  #redirect = false;
 
-  public isAuthenticatedSignal: Signal<Observable<boolean>> = computed(
+  isAuthenticatedSignal: Signal<Observable<boolean>> = computed(
     () => this.isAuthenticated$
   );
 
-  public displayName$: Signal<Observable<string>> = computed(() =>
-    this.auth.user.pipe(map((user) => user?.displayName || ''))
+  displayName$: Signal<Observable<string>> = computed(() =>
+    this.#auth.user.pipe(map((user) => user?.displayName || ''))
   );
 
   // time for the user to see a login's message
   private readonly AUTHENTICATION_DELAY = 1000;
 
   constructor() {
-    this.users = this.firestore.collection('users');
-    this.isAuthenticated$ = this.auth.user.pipe(map((user) => !!user));
+    this.#users = this.#firestore.collection('users');
+    this.isAuthenticated$ = this.#auth.user.pipe(map((user) => !!user));
     this.isAuthenticatedWithDelay$ = this.isAuthenticated$.pipe(
       delay(this.AUTHENTICATION_DELAY)
     );
 
-    this.router.events
+    this.#router.events
       .pipe(
         filter((e) => e instanceof NavigationEnd),
-        map((e) => this.route.snapshot.firstChild),
+        map((e) => this.#route.snapshot.firstChild),
         switchMap((route) => of(getRouteAuth(route)))
       )
       .subscribe((data) => {
-        this.redirect = data.authOnly ?? false;
+        this.#redirect = data.authOnly ?? false;
       });
   }
 
-  public async createUser(model: IUser) {
+  async createUser(model: IUser) {
     if (!model.password) {
       throw new Error('Password not provided!');
     }
 
-    const userCredential = await this.auth.createUserWithEmailAndPassword(
+    const userCredential = await this.#auth.createUserWithEmailAndPassword(
       model.email,
       model.password
     );
@@ -80,7 +83,7 @@ export class AuthService {
     }
 
     // custom: Firebase/Authentication/Users/User UID
-    await this.users.doc(userCredential.user.uid).set({
+    await this.#users.doc(userCredential.user.uid).set({
       name: model.name,
       email: model.email,
       age: model.age,
@@ -90,9 +93,9 @@ export class AuthService {
     await userCredential.user.updateProfile({ displayName: model.name });
   }
 
-  public async signIn(credentials: UserCredentials): Promise<string> {
+  async signIn(credentials: UserCredentials): Promise<string> {
     try {
-      await this.auth.signInWithEmailAndPassword(
+      await this.#auth.signInWithEmailAndPassword(
         credentials.email,
         credentials.password
       );
@@ -103,12 +106,12 @@ export class AuthService {
     }
   }
 
-  public async logout($event?: Event) {
+  async logout($event?: Event) {
     $event?.preventDefault();
-    await this.auth.signOut();
+    await this.#auth.signOut();
 
-    if (this.redirect) {
-      await this.router.navigateByUrl('/');
+    if (this.#redirect) {
+      await this.#router.navigateByUrl('/');
     }
   }
 }

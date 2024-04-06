@@ -29,11 +29,11 @@ import {
   providedIn: 'root',
 })
 export class EmailTaken implements AsyncValidator {
-  private auth = inject(AngularFireAuth);
+  #auth = inject(AngularFireAuth);
 
   // todo: work with disabled: Email enumeration protection?
   validate = (control: AbstractControl): Promise<ValidationErrors | null> => {
-    return this.auth
+    return this.#auth
       .fetchSignInMethodsForEmail(control.value)
       .then((response) => (response.length ? { emailTaken: true } : null));
   };

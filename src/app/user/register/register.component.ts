@@ -1,6 +1,11 @@
 import { JsonPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
 import IUser from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
@@ -16,20 +21,20 @@ import { RegisterValidators } from '../validators/register-validators';
   templateUrl: './register.component.html',
 })
 export class RegisterComponent {
-  private authService = inject(AuthService);
-  private emailTaken = inject(EmailTaken);
-  private fb = inject(FormBuilder);
+  #authService = inject(AuthService);
+  #emailTaken = inject(EmailTaken);
+  #fb = inject(FormBuilder);
 
   inSubmission = false;
 
-  fg = this.fb.group(
+  fg = this.#fb.group(
     {
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: [
         '',
         {
           validators: [Validators.required, Validators.email],
-          asyncValidators: this.emailTaken.validate,
+          asyncValidators: this.#emailTaken.validate,
         },
       ],
       age: new FormControl<number | null>(null, [
@@ -75,7 +80,7 @@ export class RegisterComponent {
     this.inSubmission = true;
 
     try {
-      await this.authService.createUser(this.fg.value as IUser);
+      await this.#authService.createUser(this.fg.value as IUser);
     } catch (e) {
       this.inSubmission = false;
       console.error(e);

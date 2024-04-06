@@ -20,12 +20,12 @@ import { RegisterComponent } from '../register/register.component';
   templateUrl: './auth-modal.component.html',
 })
 export class AuthModalComponent implements OnInit, OnDestroy {
-  modalService = inject(ModalService);
+  #modalService = inject(ModalService);
 
   ngOnInit(): void {
-    this.modalService.register('auth');
+    this.#modalService.register('auth');
   }
   ngOnDestroy(): void {
-    this.modalService.unregister('auth');
+    this.#modalService.unregister('auth');
   }
 }

@@ -11,16 +11,16 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './login.component.html',
 })
 export class LoginComponent {
-  private authService = inject(AuthService);
+  #authService = inject(AuthService);
 
-  credentials = {
+  readonly credentials = {
     email: '',
     password: '',
   };
 
   // todo: change
-  email_regexp: RegExp = /^[a-z0-9._\-]+@[a-z0-9._\-]+$/;
-  password_regexp: RegExp =
+  readonly email_regexp: RegExp = /^[a-z0-9._\-]+@[a-z0-9._\-]+$/;
+  readonly password_regexp: RegExp =
     /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
 
   showAlert = false;
@@ -34,7 +34,7 @@ export class LoginComponent {
     this.alertColor = 'blue';
     this.inSubmission = true;
 
-    const resultMsg = await this.authService.signIn(this.credentials);
+    const resultMsg = await this.#authService.signIn(this.credentials);
 
     if (resultMsg !== '') {
       this.inSubmission = false;
