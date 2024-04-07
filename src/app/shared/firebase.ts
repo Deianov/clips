@@ -9,7 +9,7 @@ import { environment } from '@environments';
 const firebaseEnvironments = environment.firebase;
 
 if (environment.production) {
-  firebaseEnvironments.apiKey = process?.env?.apiKey || '';
+  firebaseEnvironments.apiKey = process.env.API_KEY || '';
 }
 
 const firebaseProviders: EnvironmentProviders = importProvidersFrom([
