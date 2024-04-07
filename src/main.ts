@@ -5,6 +5,7 @@ import firebase from 'firebase/compat/app';
 import { enableProdMode } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { environment } from '@environments';
+import { firebaseEnvironments } from '@shared/firebase';
 
 import { AppComponent } from './app/app.component';
 import { appConfig } from './app/app.config';
@@ -14,7 +15,7 @@ if (environment.production) {
 }
 
 // Initializing Firebase First
-firebase.initializeApp(environment.firebase);
+firebase.initializeApp(firebaseEnvironments);
 let isAppInit = false;
 
 firebase.auth().onAuthStateChanged(() => {
