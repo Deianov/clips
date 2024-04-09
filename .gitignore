@@ -1,7 +1,6 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # user
-environment.development.ts
 .env
 /tmp
 /templates
@@ -46,3 +45,8 @@ logs
 # System files
 .DS_Store
 Thumbs.db
+
+.env*
+.flaskenv*
+!.env.project
+!.env.vault

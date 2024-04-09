@@ -2,11 +2,11 @@
   "name": "clips",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "ng": "node -r dotenv/config node_modules/@angular/cli/bin/ng",
+    "start": "node -r dotenv/config node_modules/@angular/cli/bin/ng serve",
+    "build": "node -r dotenv/config node_modules/@angular/cli/bin/ng build",
+    "watch": "node -r dotenv/config node_modules/@angular/cli/bin/ng build --watch --configuration development",
+    "test": "node -r dotenv/config node_modules/@angular/cli/bin/ng test"
   },
   "private": true,
   "dependencies": {
@@ -25,6 +25,7 @@
     "@types/uuid": "^9.0.8",
     "@types/video.js": "^7.3.57",
     "@videojs/themes": "^1.0.1",
+    "dotenv": "^16.4.5",
     "ngx-mask": "^17.0.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
@@ -36,6 +37,7 @@
     "@angular-devkit/build-angular": "^17.0.8",
     "@angular/cli": "^17.0.8",
     "@angular/compiler-cli": "^17.0.0",
+    "@ngx-env/builder": "^17.3.0",
     "@types/jasmine": "~5.1.0",
     "autoprefixer": "^10.4.17",
     "jasmine-core": "~5.1.0",
