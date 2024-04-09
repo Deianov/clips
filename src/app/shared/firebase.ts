@@ -9,6 +9,8 @@ import {
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
+console.log(import.meta.env['NG_APP_API_KEY']);
+
 const firebaseEnvironments: FirebaseOptions = {
   apiKey: import.meta.env['NG_APP_API_KEY'],
   authDomain: 'clips-e1dca.firebaseapp.com',
