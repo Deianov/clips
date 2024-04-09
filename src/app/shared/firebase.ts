@@ -11,7 +11,7 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 const API_KEY = import.meta.env?.NG_APP_API_KEY;
 console.log(API_KEY);
-console.log(JSON.stringify(import.meta.env));
+console.log(JSON.stringify(process?.env));
 
 const firebaseEnvironments: FirebaseOptions = {
   apiKey: API_KEY,
