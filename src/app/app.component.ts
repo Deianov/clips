@@ -16,8 +16,4 @@ export class AppComponent {
   private authService = inject(AuthService);
 
   isAuthenticated = this.authService.isAuthenticatedSignal;
-
-  constructor() {
-    console.log(`KEY: ${import.meta.env.NG_APP_API_KEY.slice(0, 5)}`);
-  }
 }

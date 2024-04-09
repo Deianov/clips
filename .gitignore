@@ -50,3 +50,4 @@ Thumbs.db
 .flaskenv*
 !.env.project
 !.env.vault
+.vercel

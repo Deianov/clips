@@ -8,10 +8,11 @@ import {
 } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { environment } from '@environments';
 
 const API_KEY = import.meta.env?.NG_APP_API_KEY;
 console.log(API_KEY);
-console.log(JSON.stringify(process?.env));
+console.log(environment.API_KEY);
 
 const firebaseEnvironments: FirebaseOptions = {
   apiKey: API_KEY,

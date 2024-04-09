@@ -13,9 +13,6 @@
         "build": {
           "builder": "@ngx-env/builder:application",
           "options": {
-            "allowedCommonJsDependencies": [
-              "lodash"
-            ],
             "outputPath": "dist/clips",
             "index": "src/index.html",
             "browser": "src/main.ts",
