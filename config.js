@@ -1,4 +1,4 @@
-const dotenv = require("dotenv").config();
+const dotenv = require("dotenv").config({ path: "src/.env" });
 
 const API_KEY = process.env?.NG_APP_API_KEY;
 const APP_TEST = process.env?.APP_TEST;
