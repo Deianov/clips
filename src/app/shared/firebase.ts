@@ -1,18 +1,14 @@
 //  https://github.com/angular/angularfire/issues/3365
 
 import { EnvironmentProviders, importProvidersFrom } from '@angular/core';
-import {
-  FirebaseOptions,
-  initializeApp,
-  provideFirebaseApp,
-} from '@angular/fire/app';
+import { FirebaseOptions, initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { environment } from '@environments';
 
 const API_KEY = import.meta.env?.NG_APP_API_KEY;
 console.log(API_KEY);
-console.log(environment.API_KEY);
+console.log(import.meta.env?.NG_APP_TEST);
 
 const firebaseEnvironments: FirebaseOptions = {
   apiKey: API_KEY,
