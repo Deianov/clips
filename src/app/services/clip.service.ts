@@ -1,21 +1,13 @@
 import { deleteObject, getStorage, ref } from 'firebase/storage';
-import {
-  BehaviorSubject,
-  combineLatest,
-  lastValueFrom,
-  map,
-  Observable,
-  of,
-  switchMap,
-} from 'rxjs';
+import { BehaviorSubject, combineLatest, lastValueFrom, map, Observable, of, switchMap } from 'rxjs';
 
 import { inject, Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
-  AngularFirestore,
-  AngularFirestoreCollection,
-  DocumentReference,
-  QuerySnapshot,
+	AngularFirestore,
+	AngularFirestoreCollection,
+	DocumentReference,
+	QuerySnapshot,
 } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 
@@ -99,9 +91,6 @@ export class ClipService {
       const lastDoc = await lastValueFrom(
         this.clipsCollection.doc(lastDocID).get()
       );
-
-      console.log(lastDoc);
-
       query = query.startAfter(lastDoc);
     }
 
