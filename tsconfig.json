@@ -27,7 +27,6 @@
     ],
     "paths":{
       "@environments": ["./src/environments/environment"],
-      "@directives/*": ["./src/app/shared/directives/*"],
       "@shared/*": ["./src/app/shared/*"]
     }
   },

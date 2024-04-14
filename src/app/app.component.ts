@@ -2,9 +2,9 @@ import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
-import { NavComponent } from './nav/nav.component';
-import { AuthService } from './services/auth.service';
-import { AuthModalComponent } from './user/auth-modal/auth-modal.component';
+import { AuthModalComponent } from './core/components/auth-modal/auth-modal.component';
+import { NavComponent } from './core/components/nav/nav.component';
+import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',

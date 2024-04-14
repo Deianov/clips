@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 
-import { ClipComponent } from './clip/clip.component';
-import { HomeComponent } from './home/home.component';
-import { ClipResolver } from './resolvers/clip-resolver';
+import { ClipComponent } from './features/clips/clip/clip.component';
+import { ClipResolver } from './features/clips/resolvers/clip-resolver';
+import { HomeComponent } from './features/home/home.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -11,11 +11,12 @@ export const routes: Routes = [
     path: 'about',
     title: 'About',
     loadComponent: () =>
-      import('./about/about.component').then((m) => m.AboutComponent),
+      import('./features/about/about.component').then((m) => m.AboutComponent),
   },
   {
     path: 'dashboard',
-    loadChildren: () => import('./video/video-routes').then((m) => m.routes),
+    loadChildren: () =>
+      import('./features/video/video-routes').then((m) => m.routes),
   },
   {
     path: 'clip/:id',
@@ -25,7 +26,7 @@ export const routes: Routes = [
   {
     path: '**',
     loadComponent: () =>
-      import('./errors/page-not-found.component').then(
+      import('./core/components/page-errors/page-not-found.component').then(
         (m) => m.PageNotFoundComponent
       ),
   },

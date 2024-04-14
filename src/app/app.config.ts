@@ -2,12 +2,18 @@ import { provideEnvironmentNgxMask } from 'ngx-mask';
 
 import { ApplicationConfig } from '@angular/core';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
-import { PreloadAllModules, provideRouter, TitleStrategy, withDebugTracing, withPreloading } from '@angular/router';
+import {
+  PreloadAllModules,
+  provideRouter,
+  TitleStrategy,
+  withDebugTracing,
+  withPreloading,
+} from '@angular/router';
 import { environment } from '@environments';
-import { firebaseProviders } from '@shared/firebase';
 
-import { TemplatePageTitleStrategy } from '../config/template-page-title-strategy';
 import { routes } from './app.routes';
+import { firebaseProviders } from './config/firebase';
+import { TemplatePageTitleStrategy } from './config/template-page-title-strategy';
 
 export const appConfig: ApplicationConfig = {
   providers: [
