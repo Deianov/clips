@@ -12,18 +12,18 @@ import { ModalService } from '../services/modal.service';
   templateUrl: './nav.component.html',
 })
 export class NavComponent {
-  private modalService = inject(ModalService);
-  private authService = inject(AuthService);
+  #modalService = inject(ModalService);
+  #authService = inject(AuthService);
 
-  displayName = this.authService.displayName$;
-  isAuthenticated = this.authService.isAuthenticatedSignal;
+  displayName = this.#authService.displayNameSignal;
+  isAuthenticated = this.#authService.isAuthenticatedSignal;
 
   openModal($event: Event) {
     $event.preventDefault();
-    this.modalService.toggleModal('auth');
+    this.#modalService.toggleModal('auth');
   }
 
   logout = (event: Event) => {
-    this.authService.logout(event);
+    this.#authService.logout(event);
   };
 }

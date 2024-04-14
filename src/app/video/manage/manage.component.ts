@@ -1,13 +1,7 @@
 import { BehaviorSubject } from 'rxjs';
 
 import { Component, inject, OnInit, signal } from '@angular/core';
-import {
-  ActivatedRoute,
-  Params,
-  Router,
-  RouterLink,
-  RouterOutlet,
-} from '@angular/router';
+import { ActivatedRoute, Params, Router, RouterLink, RouterOutlet } from '@angular/router';
 
 import IClip from '../../models/clip.model';
 import { ClipService } from '../../services/clip.service';
@@ -43,6 +37,10 @@ export class ManageComponent implements OnInit {
     });
     this.clipService.getUserClips(this.sort$).subscribe((docs) => {
       this.clips = [];
+
+      if (!docs) {
+        return;
+      }
 
       docs.forEach((doc) => {
         this.clips.push({

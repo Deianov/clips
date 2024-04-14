@@ -1,26 +1,23 @@
 import { FirebaseError } from 'firebase/app';
 import { AuthErrorCodes } from 'firebase/auth';
-import { delay, filter, from, map, Observable, of, switchMap } from 'rxjs';
+import { delay, filter, from, map, Observable, of, switchMap, tap } from 'rxjs';
 
-import { computed, inject, Injectable, Signal } from '@angular/core';
+import { computed, effect, inject, Injectable, signal, Signal } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import {
-  AngularFirestore,
-  AngularFirestoreCollection,
-} from '@angular/fire/compat/firestore';
-import {
-  ActivatedRoute,
-  ActivatedRouteSnapshot,
-  ChildActivationEnd,
-  ChildActivationStart,
-  NavigationCancel,
-  NavigationEnd,
-  NavigationError,
-  NavigationStart,
-  RouteConfigLoadEnd,
-  RouteConfigLoadStart,
-  Router,
-  RoutesRecognized,
+	ActivatedRoute,
+	ActivatedRouteSnapshot,
+	ChildActivationEnd,
+	ChildActivationStart,
+	NavigationCancel,
+	NavigationEnd,
+	NavigationError,
+	NavigationStart,
+	RouteConfigLoadEnd,
+	RouteConfigLoadStart,
+	Router,
+	RoutesRecognized,
 } from '@angular/router';
 
 import IUser from '../models/user.model';
@@ -42,17 +39,19 @@ export class AuthService {
   isAuthenticatedSignal: Signal<Observable<boolean>> = computed(
     () => this.isAuthenticated$
   );
-
-  displayName$: Signal<Observable<string>> = computed(() =>
-    this.#auth.user.pipe(map((user) => user?.displayName || ''))
-  );
+  displayNameSignal = signal('');
 
   // time for the user to see a login's message
   private readonly AUTHENTICATION_DELAY = 1000;
 
   constructor() {
     this.#users = this.#firestore.collection('users');
-    this.isAuthenticated$ = this.#auth.user.pipe(map((user) => !!user));
+    this.isAuthenticated$ = this.#auth.user.pipe(
+      map((user) => {
+        this.displayNameSignal.set(user?.displayName ?? '');
+        return !!user;
+      })
+    );
     this.isAuthenticatedWithDelay$ = this.isAuthenticated$.pipe(
       delay(this.AUTHENTICATION_DELAY)
     );
@@ -91,6 +90,7 @@ export class AuthService {
     });
 
     await userCredential.user.updateProfile({ displayName: model.name });
+    this.displayNameSignal.set(model.name);
   }
 
   async signIn(credentials: UserCredentials): Promise<string> {
