@@ -19,8 +19,8 @@ import { AlertComponent } from '@shared/components/alert/alert.component';
 import { InputComponent } from '@shared/components/input/input.component';
 import { ModalComponent } from '@shared/components/modal/modal.component';
 
-import IClip from '../../../core/models/clip.model';
 import { ModalService } from '../../../core/services/modal.service';
+import IClip from '../../clips/clip.model';
 import { ClipService } from '../../clips/clip.service';
 
 @Component({

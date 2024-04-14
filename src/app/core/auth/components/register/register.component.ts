@@ -6,13 +6,13 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { AlertComponent } from '@shared/components/alert/alert.component';
+import { InputComponent } from '@shared/components/input/input.component';
 
-import IUser from '../../core/models/user.model';
-import { AuthService } from '../../core/services/auth.service';
-import { AlertComponent } from '../../shared/components/alert/alert.component';
-import { InputComponent } from '../../shared/components/input/input.component';
-import { EmailTaken } from '../../shared/validators/email-taken';
-import { RegisterValidators } from '../../shared/validators/register-validators';
+import { AuthService } from '../../auth.service';
+import IUser from '../../user.model';
+import { EmailTaken } from './validators/email-taken';
+import { RegisterValidators } from './validators/register-validators';
 
 @Component({
   selector: 'app-register',

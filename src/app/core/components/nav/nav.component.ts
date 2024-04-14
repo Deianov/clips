@@ -2,7 +2,7 @@ import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { ModalService } from '../../services/modal.service';
 
 @Component({

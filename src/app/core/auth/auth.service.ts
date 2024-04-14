@@ -2,25 +2,35 @@ import { FirebaseError } from 'firebase/app';
 import { AuthErrorCodes } from 'firebase/auth';
 import { delay, filter, from, map, Observable, of, switchMap, tap } from 'rxjs';
 
-import { computed, effect, inject, Injectable, signal, Signal } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import {
-	ActivatedRoute,
-	ActivatedRouteSnapshot,
-	ChildActivationEnd,
-	ChildActivationStart,
-	NavigationCancel,
-	NavigationEnd,
-	NavigationError,
-	NavigationStart,
-	RouteConfigLoadEnd,
-	RouteConfigLoadStart,
-	Router,
-	RoutesRecognized,
+  computed,
+  effect,
+  inject,
+  Injectable,
+  signal,
+  Signal,
+} from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+} from '@angular/fire/compat/firestore';
+import {
+  ActivatedRoute,
+  ActivatedRouteSnapshot,
+  ChildActivationEnd,
+  ChildActivationStart,
+  NavigationCancel,
+  NavigationEnd,
+  NavigationError,
+  NavigationStart,
+  RouteConfigLoadEnd,
+  RouteConfigLoadStart,
+  Router,
+  RoutesRecognized,
 } from '@angular/router';
 
-import IUser from '../models/user.model';
+import IUser from './user.model';
 
 @Injectable({
   providedIn: 'root',

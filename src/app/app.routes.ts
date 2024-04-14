@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
+import { ClipResolver } from './features/clips/clip-resolver';
 import { ClipComponent } from './features/clips/clip/clip.component';
-import { ClipResolver } from './features/clips/resolvers/clip-resolver';
 import { HomeComponent } from './features/home/home.component';
 
 export const routes: Routes = [

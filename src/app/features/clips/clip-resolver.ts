@@ -1,10 +1,14 @@
 import { filter, Observable, take } from 'rxjs';
 
 import { inject } from '@angular/core';
-import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  ResolveFn,
+  RouterStateSnapshot,
+} from '@angular/router';
 
-import IClip from '../../../core/models/clip.model';
-import { ClipService } from '../clip.service';
+import IClip from './clip.model';
+import { ClipService } from './clip.service';
 
 export const ClipResolver: ResolveFn<IClip | null> = (
   route: ActivatedRouteSnapshot,

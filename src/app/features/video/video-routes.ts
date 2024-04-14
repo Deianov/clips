@@ -1,7 +1,10 @@
-import { AngularFireAuthGuard, redirectUnauthorizedTo } from '@angular/fire/compat/auth-guard';
+import {
+  AngularFireAuthGuard,
+  redirectUnauthorizedTo,
+} from '@angular/fire/compat/auth-guard';
 import { Routes } from '@angular/router';
 
-import { authGuard } from '../../core/guards/auth.guard';
+import { authGuard } from '../../core/auth/auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 const redirectUnauthorizedToHome = () => redirectUnauthorizedTo('/');

@@ -1,11 +1,18 @@
 import videojs from 'video.js';
 
 import { DatePipe } from '@angular/common';
-import { Component, ElementRef, inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
-import IClip from '../../../core/models/clip.model';
 import { FbTimestampPipe } from '../../../shared/pipes/fb-timestamp.pipe';
+import IClip from '../clip.model';
 import { ClipsListComponent } from '../clips-list/clips-list.component';
 
 import type Player from 'video.js/dist/types/player';

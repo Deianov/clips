@@ -1,10 +1,16 @@
 import { BehaviorSubject } from 'rxjs';
 
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, Params, Router, RouterLink, RouterOutlet } from '@angular/router';
+import {
+  ActivatedRoute,
+  Params,
+  Router,
+  RouterLink,
+  RouterOutlet,
+} from '@angular/router';
 
-import IClip from '../../../core/models/clip.model';
 import { ModalService } from '../../../core/services/modal.service';
+import IClip from '../../clips/clip.model';
 import { ClipService } from '../../clips/clip.service';
 import { EditComponent } from '../edit/edit.component';
 

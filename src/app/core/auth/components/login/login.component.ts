@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AlertComponent } from '@shared/components/alert/alert.component';
 
-import { AuthService } from '../../core/services/auth.service';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-login',

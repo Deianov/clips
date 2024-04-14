@@ -1,18 +1,26 @@
 import { deleteObject, getStorage, ref } from 'firebase/storage';
-import { BehaviorSubject, combineLatest, lastValueFrom, map, Observable, of, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  lastValueFrom,
+  map,
+  Observable,
+  of,
+  switchMap,
+} from 'rxjs';
 
 import { inject, Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
-	AngularFirestore,
-	AngularFirestoreCollection,
-	DocumentReference,
-	QuerySnapshot,
+  AngularFirestore,
+  AngularFirestoreCollection,
+  DocumentReference,
+  QuerySnapshot,
 } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 
 // import { AngularFireStorage } from '@angular/fire/compat/storage';
-import IClip from '../../core/models/clip.model';
+import IClip from './clip.model';
 
 @Injectable({
   providedIn: 'root',
